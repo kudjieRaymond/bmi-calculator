@@ -1,12 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'icon_content.dart';
 import 'reusable_card.dart';
+import 'constants.dart';
 
-const bottomContainerHeight = 60.0;
-const activeCardColour = Color(0XFF1D1E33);
-const inactiveCardColour = Color(0XFF111328);
-const bottomContainerColour = Color(0XFFE81555);
+enum Gender { male, female }
 
 class InputPage extends StatefulWidget {
   @override
@@ -14,6 +13,8 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  Gender selectedGender;
+  int height = 150;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,21 +28,80 @@ class _InputPageState extends State<InputPage> {
               children: <Widget>[
                 Expanded(
                   child: ReusableCard(
-                    colour: activeCardColour,
-                    cardChild: IconContent(icon:FontAwesomeIcons.mars, label:'MALE'),
+                    onPress: () {
+                      setState(() {
+                        selectedGender = Gender.male;
+                      });
+                    },
+                    colour: selectedGender == Gender.male
+                        ? kActiveCardColour
+                        : kInactiveCardColour,
+                    cardChild:
+                        IconContent(icon: FontAwesomeIcons.mars, label: 'MALE'),
                   ),
                 ),
                 Expanded(
-                  child: ReusableCard(colour: Color(0XFF101E33),
-                    cardChild: IconContent(icon:FontAwesomeIcons.venus, label:'FEMALE'),
-
+                  child: ReusableCard(
+                    onPress: () {
+                      setState(() {
+                        selectedGender = Gender.female;
+                      });
+                    },
+                    colour: selectedGender == Gender.female
+                        ? kActiveCardColour
+                        : kInactiveCardColour,
+                    cardChild: IconContent(
+                        icon: FontAwesomeIcons.venus, label: 'FEMALE'),
                   ),
                 )
               ],
             ),
           ),
           Expanded(
-            child: ReusableCard(colour: activeCardColour), //Color(0XFF101E33)
+            child: ReusableCard(
+              colour: kActiveCardColour,
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text('Height', style: kLabelTextStyle),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: <Widget>[
+                      Text(
+                        height.toString(),
+                        style: kNumberTextStyle,
+                      ),
+                      Text(
+                        'cm',
+                        style: kLabelTextStyle,
+                      )
+                    ],
+                  ),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                        activeTrackColor: Colors.white,
+                        thumbColor: Color(0XFFEB1555),
+                        overlayColor: Color(0X29EB1555),
+                        thumbShape:
+                            RoundSliderThumbShape(enabledThumbRadius: 10.0),
+                        overlayShape:
+                            RoundSliderOverlayShape(overlayRadius: 20.0)),
+                    child: Slider(
+                        value: height.toDouble(),
+                        min: 120.0,
+                        max: 220.0,
+                        inactiveColor: Color(0XFFBD8E98),
+                        onChanged: (double newValue) {
+                          setState(() {
+                            height = newValue.round();
+                          });
+                        }),
+                  )
+                ],
+              ),
+            ), //Color(0XFF101E33)
           ),
           Expanded(
             child: Row(
@@ -56,11 +116,10 @@ class _InputPageState extends State<InputPage> {
             ),
           ),
           Container(
-            color:bottomContainerColour,
-            height: bottomContainerHeight,
-            width: double.infinity,
-            margin:EdgeInsets.only(top:5.0)
-          ),
+              color: kBottomContainerColour,
+              height: kBottomContainerHeight,
+              width: double.infinity,
+              margin: EdgeInsets.only(top: 5.0)),
         ],
       ),
       floatingActionButton: Theme(
@@ -72,6 +131,3 @@ class _InputPageState extends State<InputPage> {
     );
   }
 }
-
-
-
