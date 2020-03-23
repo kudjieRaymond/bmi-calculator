@@ -1,16 +1,11 @@
 # bmicalculator
 
-A Body max index calculator
+A Body max index calculator Built Using Flutter
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Clone this Repository and open it Using Android Studio
 
-A few resources to get you started if this is your first Flutter project:
+![App Preview](https://drive.google.com/open?id=1YNGeuumDJY4KJB59BaxpjA4_nyIFoQ1S)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
